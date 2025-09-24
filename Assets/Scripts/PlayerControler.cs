@@ -70,7 +70,12 @@ public class PlayerControler : MonoBehaviour
         {
             if (item.gameObject.tag == "Star")
             {
-                Debug.Log("Tocada");
+                Star starScript = item.gameObject.GetComponent<Star>();
+
+                if (starScript != null)
+                {
+                    starScript.Interaction();
+                }
             }
         }
     }
