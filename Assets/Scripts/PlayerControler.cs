@@ -19,6 +19,8 @@ public class PlayerControler : MonoBehaviour
     public bool _alreaduLanded = true;
     public InputAction _interactAction;
     public Vector2 _interactionZone = new Vector2(1, 1);
+    public int _maxHealth = 15;
+    public int _currentHealth;
 
 
     void Awake()
@@ -35,7 +37,7 @@ public class PlayerControler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        _currentHealth = _maxHealth;
     }
 
     // Update is called once per frame
@@ -108,6 +110,20 @@ public class PlayerControler : MonoBehaviour
     void FixedUpdate()
     {
         _rigidBody.linearVelocity = new Vector2(_moveInput.x * _playerSpeed, _rigidBody.linearVelocityY);
+    }
+
+    void TakeDamage(int damage)
+    {
+        _currentHealth -= damage;
+        if (_currentHealth <= 0)
+        {
+            Death();
+        }
+    }
+
+    void Death()
+    {
+        Debug.Log("sah Matao");
     }
 
     bool isGrounded()

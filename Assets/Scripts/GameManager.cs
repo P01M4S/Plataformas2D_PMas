@@ -1,9 +1,14 @@
 using System.Data;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
+    public GameObject _canvasPause;
+    public InputActionAsset playerInput;
+    public InputAction _pauseInput;
+    public bool _isPaused = false;
     int _stars = 0;
 
     void Awake()
@@ -17,6 +22,8 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         DontDestroyOnLoad(gameObject);
+
+        _pauseInput = InputSystem.actions["Pause"];
     }
 
     public void AddStar()
@@ -24,4 +31,31 @@ public class GameManager : MonoBehaviour
         _stars++;
         Debug.Log("Estrellazo" + _stars);
     }
+
+    void Update()
+    {
+        if (_pauseInput.WasPressedThisFrame())
+        {
+            Pause();
+        }
+    }
+
+    public void Pause()
+    {
+        if (_isPaused)
+        {
+            Time.timeScale = 1;
+            _canvasPause.SetActive(false);
+            playerInput.FindActionMap("player").Enable();
+            _isPaused = false;
+        }
+        else
+        {
+            Time.timeScale = 0;
+            _canvasPause.SetActive(true);
+            playerInput.FindActionMap("player").Disable();
+            _isPaused = true;
+        }
+    }
+
 }
