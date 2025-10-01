@@ -115,6 +115,8 @@ public class PlayerControler : MonoBehaviour
     void TakeDamage(int damage)
     {
         _currentHealth -= damage;
+        GUImanager.Instance.UpdateHealthBar(_currentHealth, _maxHealth);
+        
         if (_currentHealth <= 0)
         {
             Death();

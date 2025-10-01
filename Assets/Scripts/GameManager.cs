@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
-    public GameObject _canvasPause;
     public InputActionAsset playerInput;
     public InputAction _pauseInput;
     public bool _isPaused = false;
@@ -45,14 +44,14 @@ public class GameManager : MonoBehaviour
         if (_isPaused)
         {
             Time.timeScale = 1;
-            _canvasPause.SetActive(false);
+            GUImanager.Instance.ChangeCanvasStatus(GUImanager.Instance._canvasPause, false);
             playerInput.FindActionMap("player").Enable();
             _isPaused = false;
         }
         else
         {
             Time.timeScale = 0;
-            _canvasPause.SetActive(true);
+            GUImanager.Instance.ChangeCanvasStatus(GUImanager.Instance._canvasPause, true);
             playerInput.FindActionMap("player").Disable();
             _isPaused = true;
         }
