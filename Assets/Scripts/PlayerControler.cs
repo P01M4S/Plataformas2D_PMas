@@ -19,8 +19,8 @@ public class PlayerControler : MonoBehaviour
     public bool _alreaduLanded = true;
     public InputAction _interactAction;
     public Vector2 _interactionZone = new Vector2(1, 1);
-    public int _maxHealth = 15;
-    public int _currentHealth;
+    public float _maxHealth = 15;
+    public float _currentHealth;
 
 
     void Awake()

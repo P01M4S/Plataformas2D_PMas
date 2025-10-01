@@ -30,7 +30,7 @@ public class GUImanager : MonoBehaviour
         GameManager.instance.Pause();
     }
 
-    public void UpdateHealthBar(int currentHealth, int maxHealth)
+    public void UpdateHealthBar(float currentHealth, float maxHealth)
     {
         _healthBar.fillAmount = currentHealth / maxHealth;
     }

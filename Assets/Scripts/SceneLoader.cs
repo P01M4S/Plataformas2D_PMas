@@ -9,6 +9,7 @@ public class SceneLoader : MonoBehaviour
     public static SceneLoader Instance { get; private set; }
     public GameObject _loadingCanvas;
     public Image _loadBar;
+    public Text _loadingText;
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -41,7 +42,9 @@ public class SceneLoader : MonoBehaviour
         {
             //_loadBar.fillAmount = asyncLoad.progress;
             fakeLoadPorcentage += 0.01f;
+            Mathf.Clamp01(fakeLoadPorcentage);
             _loadBar.fillAmount = fakeLoadPorcentage;
+            _loadingText.text = (fakeLoadPorcentage * 100).ToString("F0") + "%";
 
             if (asyncLoad.progress >= 0.9f && fakeLoadPorcentage >= 0.99f)
             {
@@ -50,6 +53,10 @@ public class SceneLoader : MonoBehaviour
 
             yield return new WaitForSecondsRealtime(0.1f);
         }
+        Time.timeScale = 1;
+        GameManager.instance.playerInput.FindActionMap("Player").Enable();
+        GameManager.instance._isPaused = false;
+        
         _loadingCanvas.SetActive(false);
     }
     
