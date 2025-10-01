@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public InputAction _pauseInput;
     public bool _isPaused = false;
     int _stars = 0;
+    internal object enemisOnScrean;
 
     void Awake()
     {
