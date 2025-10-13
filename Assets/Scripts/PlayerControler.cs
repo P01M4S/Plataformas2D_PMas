@@ -123,7 +123,7 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    void Death()
+    public void Death()
     {
         Debug.Log("sah Matao");
     }
