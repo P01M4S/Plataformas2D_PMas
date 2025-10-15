@@ -10,6 +10,7 @@ public class SceneLoader : MonoBehaviour
     public GameObject _loadingCanvas;
     public Image _loadBar;
     public Text _loadingText;
+    public string _sceneMuerte = "Death";
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -56,8 +57,9 @@ public class SceneLoader : MonoBehaviour
         Time.timeScale = 1;
         GameManager.instance.playerInput.FindActionMap("Player").Enable();
         GameManager.instance._isPaused = false;
-        
+
         _loadingCanvas.SetActive(false);
     }
-    
+
 }
+

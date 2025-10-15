@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -27,10 +28,16 @@ public class Enemy : MonoBehaviour
             direction *= -1;
         }
 
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             PlayerControler playerScript = collision.gameObject.GetComponent<PlayerControler>();
-            playerScript.Death();
+            playerScript.TakeDamage(2);
+            direction *= -1;
         }
+    }
+
+    internal static void Destroy()
+    {
+        throw new NotImplementedException();
     }
 }

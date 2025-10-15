@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System;
+using Unity.VisualScripting;
 
 public class PlayerControler : MonoBehaviour
 {
@@ -62,6 +63,11 @@ public class PlayerControler : MonoBehaviour
 
         _animator.SetBool("IsJumping", !isGrounded());
 
+        if (attackAction.WasPressedThisFrame())
+        {
+            _animator.SetTrigger("IsAtacking");
+        }
+
     }
 
     void Interact()
@@ -71,6 +77,24 @@ public class PlayerControler : MonoBehaviour
         foreach (Collider2D item in interactable)
         {
             if (item.gameObject.tag == "Star")
+            {
+                Star starScript = item.gameObject.GetComponent<Star>();
+
+                if (starScript != null)
+                {
+                    starScript.Interaction();
+                }
+            }
+            if (item.gameObject.tag == "Coins")
+            {
+                Star starScript = item.gameObject.GetComponent<Star>();
+
+                if (starScript != null)
+                {
+                    starScript.Interaction();
+                }
+            }
+            if (item.gameObject.tag == "Coras")
             {
                 Star starScript = item.gameObject.GetComponent<Star>();
 
@@ -112,7 +136,7 @@ public class PlayerControler : MonoBehaviour
         _rigidBody.linearVelocity = new Vector2(_moveInput.x * _playerSpeed, _rigidBody.linearVelocityY);
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
         GUImanager.Instance.UpdateHealthBar(_currentHealth, _maxHealth);
@@ -126,6 +150,7 @@ public class PlayerControler : MonoBehaviour
     public void Death()
     {
         Debug.Log("sah Matao");
+        SceneLoader.Instance.ChangeScene("Death");
     }
 
     bool isGrounded()
@@ -150,6 +175,27 @@ public class PlayerControler : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.position, _interactionZone);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Death"))
+        {
+            Debug.Log("MeMori");
+            Death();
+        }
+    }
+
+    void Atacking()
+    {
+        Collider2D[] ground = Physics2D.OverlapBoxAll(_sensorPosition.position, _sensorSize, 0);
+        foreach (Collider2D item in ground)
+        {
+            if (item.gameObject.layer == 8)
+            {
+                
+            }
+        }
     }
 
 }
